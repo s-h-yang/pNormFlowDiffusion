@@ -11,8 +11,8 @@ Inputs:
 
        degree - Vector of node degrees.
 
-      seedset - Dictionary specifying seed nodes and seed mass as (key, value)
-                pairs.
+      seedset - Dictionary specifying seed node(s) and seed mass as 
+                (key, value) pairs.
 
             p - Specifies the p-norm in primal p-norm flow objective.
 
@@ -21,17 +21,18 @@ Inputs:
                 purposes.
 
     max_iters - Maximum number of passes for Random Permutation Coordinate
-                Descent/Minimization.
+                Minimization.
                 A single pass goes over all nodes that violate KKT conditions.
 
-      epsilon - Specifies the maximum tolerance of excess mass on a node before
-                diffusion process terminates.
+      epsilon - Tolerance on the maximum excess mass (equivalently, maximum
+                primal infeasibility).
+                Diffusion process terminates whenever the excess mass is no
+                greater than epsilon on all nodes.
 
-         btol - Specifies the tolerance in the binary search for an approximate
-                coordinate minimization step.
-                This is required only if p > 2.
-                Approximate coordinate minimization in this setting is
-                equivalent to performing inexact line-seach on the usual
+         btol - Tolerance in the binary search for an approximate coordinate 
+                minimization step (required only if p > 2).
+                Approximate coordinate minimization in this diffusion setting
+                is equivalent to performing inexact line-seach on the usual
                 coordinate descent stepsizes.
 
 Returns:
