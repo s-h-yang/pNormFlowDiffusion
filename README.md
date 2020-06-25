@@ -1,1 +1,1 @@
-# pNormFlowDiffusion
+# p-Norm Flow Diffusion
