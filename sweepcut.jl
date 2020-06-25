@@ -18,7 +18,7 @@ function sweepcut(adjlist::Vector{Vector{Int}}, degree::Vector{Int}, x::Vector{F
                 cut_C += 1
             end
         end
-        cond_C = cut_C / min(vol_C, vol_G-vol_C)
+        cond_C = cut_C / min(vol_C, vol_G - vol_C)
         if cond_C <= best_conductance
             best_cluster = copy(C)
             best_conductance = cond_C
