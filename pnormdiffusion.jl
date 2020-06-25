@@ -21,13 +21,12 @@ Inputs:
                 purposes.
 
     max_iters - Maximum number of passes for Random Permutation Coordinate
-                Minimization.
-                A single pass goes over all nodes that violate KKT conditions.
+                Minimization. A single pass goes over all nodes that violate 
+                KKT conditions.
 
       epsilon - Tolerance on the maximum excess mass (equivalently, maximum
-                primal infeasibility).
-                Diffusion process terminates whenever the excess mass is no
-                greater than epsilon on all nodes.
+                primal infeasibility). Diffusion process terminates whenever 
+                the excess mass is no greater than epsilon on all nodes.
 
          btol - Tolerance in the binary search for an approximate coordinate 
                 minimization step (required only if p > 2).
