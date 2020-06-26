@@ -1,17 +1,18 @@
 using Random
 
+include("struct.jl")
+include("utils.jl")
+
 """
 Computes node embeddings from p-norm flow diffusion on an undirected unweighted
 graph G. Extentions to weighted graphs are straightforward.
 
 Inputs:
-      adjlist - Adjacency list representation of G.
+            G - Adjacency list representation of graph.
                 Node indices must start from 1 and end with n, where n is the
                 number of nodes in G.
 
-       degree - Vector of node degrees.
-
-      seedset - Dictionary specifying seed node(s) and seed mass as 
+      seedset - Dictionary specifying seed node(s) and seed mass as
                 (key, value) pairs.
 
             p - Specifies the p-norm in primal p-norm flow objective.
@@ -21,38 +22,39 @@ Inputs:
                 purposes.
 
     max_iters - Maximum number of passes for Random Permutation Coordinate
-                Minimization. A single pass goes over all nodes that violate 
+                Minimization. A single pass goes over all nodes that violate
                 KKT conditions.
 
-      epsilon - Tolerance on the maximum excess mass (equivalently, maximum
-                primal infeasibility). Diffusion process terminates whenever 
-                the excess mass is no greater than epsilon on all nodes.
+      epsilon - Tolerance on the maximum excess mass on nodes (which is
+                equivalent to the maximum primal infeasibility).
+                Diffusion process terminates whenever the excess mass is no
+                greater than epsilon on all nodes.
 
-         btol - Tolerance in the binary search for an approximate coordinate 
-                minimization step (required only if p > 2).
+       cm_tol - Tolerance in the approximate coordinate minimization step
+                (required only for p > 2).
                 Approximate coordinate minimization in this diffusion setting
-                is equivalent to performing inexact line-seach on the usual
-                coordinate descent stepsizes.
+                is equivalent to performing inexact line-seach on coordinate
+                descent stepsizes.
 
 Returns:
             x - Node embeddings.
-                Apply sweepcut on x produces the final output cluster.
+                Applying sweepcut on x produces the final output cluster.
 """
 
-function pnormdiffusion(adjlist::Vector{Vector{Int}}, degree::Vector{Int},
-            seedset::Dict{Int,T} where T<:Real; p::Real=2, mu::Real=0,
-            max_iters::Int=25, epsilon::Float64=1.0e-3, btol::Float64=1.0e-2)
+function pnormdiffusion(G::AdjacencyList, seedset::Dict{Int,T} where T<:Real;
+            p::Real, mu::Real=0, max_iters::Int=50, epsilon::Float64=1.0e-3,
+            cm_tol::Float64=1.0e-2)
 
-    mass = zeros(Float64, length(degree))
-    for (i,m) in seedset
-        mass[i] = Float64(m)
+    mass = zeros(Float64, G.nv)
+    for (v,m) in seedset
+        mass[v] = Float64(m)
     end
-    x = zeros(Float64, length(degree))
+    x = zeros(Float64, G.nv)
 
     if p == 2
-        l2opt!(x, mass, adjlist, degree, max_iters, epsilon)
+        l2opt!(x, mass, G.adjlist, G.degree, max_iters, epsilon)
     elseif p > 2
-        lpopt!(x, mass, adjlist, degree, max_iters, epsilon, p, mu, btol)
+        lpopt!(x, mass, G.adjlist, G.degree, max_iters, epsilon, p, mu, cm_tol)
     else
         error("p should be >= 2.")
     end
@@ -86,7 +88,7 @@ end
 
 function lpopt!(x::Vector{Float64}, mass::Vector{Float64},
             adjlist::Vector{Vector{Int}}, degree::Vector{Int}, max_iters::Int,
-            epsilon::Float64, p::Real, mu::Real, btol::Float64)
+            epsilon::Float64, p::Real, mu::Real, cm_tol::Float64)
 
     q = p/(p - 1)
     mass0 = copy(mass)
@@ -98,7 +100,7 @@ function lpopt!(x::Vector{Float64}, mass::Vector{Float64},
         end
         for v in shuffle!(T)
             x_v_prev = x[v]
-            push_node_v!(x, mass, v, adjlist, degree, mass0, q, mu, btol)
+            push_node_v!(x, mass, v, adjlist, degree, mass0, q, mu, cm_tol)
             for u in adjlist[v]
                 if mass[u] == 0
                     push!(S, u)
@@ -115,14 +117,14 @@ This is done by simply increasing x[v], the incumbent node embedding for node v.
 """
 function push_node_v!(x::Vector{Float64}, mass::Vector{Float64}, v::Int,
             adjlist::Vector{Vector{Int}}, degree::Vector{Int},
-            mass0::Vector{Float64}, q::Float64, mu::Real, btol::Float64)
+            mass0::Vector{Float64}, q::Float64, mu::Real, cm_tol::Float64)
     L = x[v]
     U = L + 1
     while compute_mass_v(x, v, U, adjlist, mass0, q, mu) > degree[v]
         L = U
         U *= 2
     end
-    tol = max(btol, 2*eps(U));
+    tol = max(cm_tol, 2*eps(U));
     while abs(U - L) > tol
         M = (L + U)/2
         if compute_mass_v(x, v, M, adjlist, mass0, q, mu) > degree[v]
