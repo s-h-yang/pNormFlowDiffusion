@@ -26,7 +26,7 @@ seedset = Dict(seed_node => seed_mass)
 # Run p-Norm Flow Diffusion
 x = pnormdiffusion(G, seedset, p=4)
 
-# Obtain a cluster by applying the sweepcut on x
+# Obtain a cluster by applying sweepcut on x
 cluster, conductance = sweepcut(G, x)
 println("conductance is ", conductance)
 
