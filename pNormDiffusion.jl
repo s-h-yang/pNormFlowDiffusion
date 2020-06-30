@@ -45,6 +45,11 @@ function pnormdiffusion(G::AdjacencyList, seedset::Dict{Int,T} where T<:Real;
             p::Real, mu::Real=0, max_iters::Int=50, epsilon::Float64=1.0e-3,
             cm_tol::Float64=1.0e-2)
 
+    for (seed_node, seed_mass) in seedset
+        if seed_mass > 0 && G.degree[seed_node] == 0
+            error("Positive initial mass on node that has degree 0.")
+        end
+    end
     mass = zeros(Float64, G.nv)
     for (v,m) in seedset
         mass[v] = Float64(m)
