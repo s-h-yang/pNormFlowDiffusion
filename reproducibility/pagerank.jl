@@ -1,5 +1,6 @@
 # Implements the L1-regularized PageRank. See
 # "Variational Perspective on Local Graph Clustering. K. Fountoulakis et al."
+
 using SparseArrays
 
 include("../struct.jl")
