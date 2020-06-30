@@ -4,7 +4,7 @@ include("pnormdiffusion_tuning.jl")
 include("optimal_pagerank.jl")
 include("nonlinear.jl")
 
-function run_Slfd_experiment()
+function run_Sfld_experiment()
 
     G = read_edgelist("../datasets/Sfld_edgelist.txt")
     A = adjacency_matrix(G)
@@ -58,16 +58,18 @@ function run_Slfd_experiment()
 
 end
 
-conds_mean, f1s_mean = run_Slfd_experiment()
+conds_mean, f1s_mean = run_Sfld_experiment()
 
-open("Slfd_conductances.txt", "w") do f
-    for means in eachrow(conds_mean)
-        @printf(f,"%.4f\t%.4f\t%.4f\t%.4f\n",means[1],means[2],means[3],means[4])
+open("Sfld_conductances.txt", "w") do f
+    @printf(f, "%s\t%s\t%s\t%s\n", "p=2", "p=4", "appr", "nonlinear")
+    for m in eachrow(conds_mean)
+        @printf(f, "%.4f\t%.4f\t%.4f\t%.4f\n", m[1], m[2], m[3], m[4])
     end
 end
 
-open("Slfd_F1scores.txt", "w") do f
-    for means in eachrow(f1s_mean)
-        @printf(f,"%.4f\t%.4f\t%.4f\t%.4f\n",means[1],means[2],means[3],means[4])
+open("Sfld_F1scores.txt", "w") do f
+    @printf(f, "%s\t%s\t%s\t%s\n", "p=2", "p=4", "appr", "nonlinear")
+    for m in eachrow(f1s_mean)
+        @printf(f, "%.4f\t%.4f\t%.4f\t%.4f\n", m[1], m[2], m[3], m[4])
     end
 end
