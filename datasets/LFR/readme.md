@@ -1,4 +1,4 @@
-These LFR synthetic datasets are obtained from https://github.com/RaniaSalama/Nonlinear_Diffusion/tree/master/LFR_Figures (accessed in January 2020).
+These LFR synthetic datasets are from https://github.com/RaniaSalama/Nonlinear_Diffusion/tree/master/LFR_Figures (accessed in January 2020).
 We changed data file format for our experiments.
 
 The parameters for the LFR model are:
