@@ -8,6 +8,7 @@
 # maximum community size = 100
 # power law exponent for the degree distribution = 2
 # power law exponent for the community size distribution = 1
+
 using SparseArrays, Printf, Statistics
 using PyCall, PyPlot
 
