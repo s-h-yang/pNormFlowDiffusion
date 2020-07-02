@@ -23,7 +23,7 @@ seed_node = 1
 seed_mass = 0.3*sum(G.degree)
 seedset = Dict(seed_node => seed_mass)
 
-# Run p-Norm Flow Diffusion
+# Run p-Norm Flow Diffusion with p = 4
 x = pnormdiffusion(G, seedset, p=4)
 
 # Obtain a cluster by applying sweepcut on x
