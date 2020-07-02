@@ -37,7 +37,6 @@ for i in target_cluster
     push!(nc, "r")
     push!(ns, 8)
 end
-
 plt.subplots()
 plt.axes(frameon=false)
 nx.draw_networkx_nodes(g_nx, pos_dict, nodelist=nl, node_size=ns, node_color=nc)
