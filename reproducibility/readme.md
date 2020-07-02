@@ -4,4 +4,4 @@ It requires [PyCall](https://github.com/JuliaPy/PyCall.jl) and [PyPlot](https://
 To re-compute the numbers in Table 1 (Table 3) in the conference version (arxiv version)
 - `include("Facebook_experiments.jl")` for the two Facebook social networks;
 - `include("Sfld_experiment.jl")` for the biological network;
-- follow the instructions in Orkut_experiment.jl] and then `include("Orkut_experiment.jl")`.
+- follow the instructions in Orkut_experiment.jl and then `include("Orkut_experiment.jl")`.
