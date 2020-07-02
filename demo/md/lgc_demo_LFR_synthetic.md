@@ -27,6 +27,7 @@ g_nx = nx.read_edgelist("../datasets/LFR_edgelist.txt");
 pos = readdlm("../datasets/LFR_pos.txt", ' ', Float64, '\n');
 pos_dict = Dict(string(i) => (xy[1],xy[2]) for (i,xy) in enumerate(eachrow(pos)));
 
+# Make plot
 n1 = setdiff(Set(1:1000),Set(target_cluster))
 nl = [string(i) for i in n1];
 nc = ["k" for _ in n1];
@@ -62,11 +63,14 @@ seedset = Dict(seednode => seedmass);
 ```julia
 for p in [2,4]
     
+    # Run p-Norm Flow Diffusion
     x = pnormdiffusion(G, seedset, p=p, max_iters=100);
     cluster, cond = sweepcut(G, x);
     
+    # Computer F1 score
     pr, re, f1 = compute_f1(cluster, target_cluster)
     
+    # Make plot
     n1 = setdiff(Set(1:G.nv),Set(cluster))
     nl = [string(i) for i in n1];
     nc = ["k" for _ in n1];
@@ -112,12 +116,15 @@ rho = 1.0e-4
 
 for alpha in [0.001, 0.01, 0.05, 0.1, 0.2, 0.4, 0.8]
     
+    # Run Approximate Personalized PageRank
     p = pagerank(G, s, rho, alpha)
     x = p ./ G.degree
     cluster, cond = sweepcut(G, x)
     
+    # Compute F1 score
     pr, re, f1 = compute_f1(cluster, target_cluster)
     
+    # Make plot
     n1 = setdiff(Set(1:G.nv),Set(cluster))
     nl = [string(i) for i in n1];
     nc = ["k" for _ in n1];
