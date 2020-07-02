@@ -15,7 +15,7 @@ seed_node = 1
 seed_mass = 0.3*sum(G.degree)
 seedset = Dict(seed_node => seed_mass)
 
-# run p-norm flow diffusion
+# run p-norm flow diffusion with p = 4
 x = pnormdiffusion(G, seedset, p=4)
 
 # obtain a cluster from x
