@@ -66,7 +66,7 @@ for p in [2,4]
     x = pnormdiffusion(G, seedset, p=p, max_iters=100);
     cluster, cond = sweepcut(G, x);
     
-    # Computer F1 score
+    # Compute F1 score
     pr, re, f1 = compute_f1(cluster, target_cluster)
     
     # Make plot
