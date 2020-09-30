@@ -1,4 +1,4 @@
-# This Julia code is adopted from MATLAB code run_diffusion.m found at
+# This Julia code is adopted from MATLAB script run_diffusion.m obtained at
 # https://github.com/RaniaSalama/Nonlinear_Diffusion/tree/master/LFR_Figures/.
 # It implements a nonlinear diffusion method that iteratively applies power
 # transformation to node values.
