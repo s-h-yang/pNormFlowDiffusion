@@ -1,6 +1,6 @@
 # p-Norm Flow Diffusion
 
-This repository contains the code to solve primal and dual p-Norm Flow Diffusion problems in the paper "p-Norm Flow Diffusion for Local Graph clustering. Kimon Fountoulakis, Di Wang, Shenghao Yang." The code returns dual variable values that provide node embeddings. The primal flow values are easily recovered from primal-dual optimality conditions. For details see [paper](https://arxiv.org/abs/2005.09810), [slides](https://cs.uwaterloo.ca/~kfountou/pdf/p-NormFlowDiffusion), and [video](https://www.youtube.com/watch?v=X6V11ZFCkk8&feature=emb_title). To reproduce the results in the paper, use the scripts in [reproducibility](https://github.com/s-h-yang/pNormFlowDiffusion/tree/master/reproducibility).
+This repository contains the code to solve primal and dual p-Norm Flow Diffusion problems in the paper "p-Norm Flow Diffusion for Local Graph clustering. Kimon Fountoulakis, Di Wang, Shenghao Yang." The code returns dual variable values that provide node embeddings. The primal flow values are easily recovered from primal-dual optimality conditions. For details see [paper](https://arxiv.org/abs/2005.09810), [slides](https://cs.uwaterloo.ca/~s286yang/pdf/pnorm_yang_slides.pdf), and [video](https://www.youtube.com/watch?v=X6V11ZFCkk8&feature=emb_title). To reproduce the results in the paper, use the scripts in [reproducibility](https://github.com/s-h-yang/pNormFlowDiffusion/tree/master/reproducibility).
 
 # Example usage
 
